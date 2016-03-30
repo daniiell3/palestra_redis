@@ -1,0 +1,68 @@
+<?php
+
+require_once 'palestra.functions.inc';
+
+define('REDIS_INCR', 'palestra:requests');
+define('REDIS_IPS', 'palestra:ips');
+
+/*
+ * Implements hook_menu()
+ */
+function palestra_menu() {
+  $items['palestra'] = array(
+    'page callback'   => '_palestra_callback',
+    'access callback' => TRUE,
+    'type'            => MENU_NORMAL_ITEM
+  );
+
+  $items['palestra/acessos'] = array(
+    'page callback'   => '_palestra_acessos_callback',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/*
+ * Implements callback menu /palestra
+ */
+function _palestra_acessos_callback() {
+  $result = [];
+
+  if ($redis = _redis_connect()) {
+    $result['requests'] = ($redis->get(REDIS_INCR)) ? $redis->get(REDIS_INCR) : '';
+
+    $result['ips'] = (!empty($redis->smembers(REDIS_IPS))) ? $redis->smembers(REDIS_IPS) : '';
+
+    $result['single_request_by_ip'] = (!empty($redis->scard(REDIS_IPS))) ? $redis->scard(REDIS_IPS) : '';
+  }
+
+  drupal_json_output($result);
+}
+
+/*
+ * Implements callback menu /palestra
+ */
+function _palestra_callback() {
+  if ($redis = _redis_connect()) {
+    // Incrementando requests
+    _palestra_requests($redis, REDIS_INCR);
+
+    // guardando ips
+    _palestra_ip($redis, REDIS_IPS);
+  }
+
+  return theme('palestra');
+}
+
+/*
+ * Implementation of hook_theme().
+ */
+function palestra_theme(){
+  return array(
+    'palestra' => array(
+      'template' => 'templates/palestra',
+    ),
+  );
+}

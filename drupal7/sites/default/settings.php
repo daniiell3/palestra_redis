@@ -602,7 +602,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 /**
  * Configurando Redis no Drupal
  */
-$conf['redis_client_interface'] = 'Predis';
+$conf['redis_client_interface'] = 'PhpRedis';
 $conf['redis_client_host']      = '127.0.0.1';
 $conf['redis_client_base']      = 1;
 $conf['redis_client_password']  = "mypass";

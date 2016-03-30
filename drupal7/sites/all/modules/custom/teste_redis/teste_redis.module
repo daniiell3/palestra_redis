@@ -1,5 +1,8 @@
 <?php
 
+/*
+ ** Implements hook_menu()
+ */
 function teste_redis_menu() {
   $items['teste/redis'] = array(
     'page callback'   => '_teste_redis_callback',
@@ -9,6 +12,9 @@ function teste_redis_menu() {
   return $items;
 }
 
+/*
+ ** Implements callback /teste/redis
+ */
 function _teste_redis_callback() {
   if ($cached = cache_get('list:data:apache')) {
     $data = $cached->data;
