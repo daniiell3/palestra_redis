@@ -1,0 +1,6 @@
+name = Redis Test
+description = Testando redis module custom.
+core = 7.x
+core = "7.x"
+project = "teste_redis"
+

@@ -1,0 +1,27 @@
+<?php
+
+function teste_redis_menu() {
+  $items['teste/redis'] = array(
+    'page callback'   => '_teste_redis_callback',
+    'access callback' => TRUE
+  );
+
+  return $items;
+}
+
+function _teste_redis_callback() {
+  if ($cached = cache_get('list:data:apache')) {
+    $data = $cached->data;
+  }
+
+  if (empty($data)) {
+    $data = array(
+      'apache' => 'Barril',
+      'eggs'   => 'Banana'
+    );
+
+    cache_set('list:data:apache', $data, 'cache', time() + 60*60);
+  }
+
+  drupal_json_output($data);
+}

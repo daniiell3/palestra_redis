@@ -1,0 +1,7 @@
+# Predis
+redis/predis/vendor
+redis/predis/composer.lock
+
+# Doctrine
+redis/doctrine/vendor
+redis/doctrine/composer.lock
