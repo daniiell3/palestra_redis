@@ -32,7 +32,11 @@ function _palestra_requests($redis, $key) {
  */
 function _palestra_ip($redis, $key) {
   if ($ip = _get_ip()) {
-    $redis->sadd($key, $ip);
+    if (!in_array($ip, $redis->zrange($key, 0, -1))) {
+      $score = $redis->zcard($key);
+
+      $redis->zadd($key, $score, $ip);
+    } 
   }
 }
 

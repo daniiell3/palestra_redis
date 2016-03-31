@@ -1,0 +1,38 @@
+.palestra__title {
+  margin: 20px 0 40px;
+  text-align: center;
+  font-size: 40px; 
+}
+
+.palestra__header-infos {
+  margin-bottom: 15px;
+}
+
+.palestra__header-infos__title {
+  margin: 0 30px 0 0;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.palestra__header-infos__data {
+  font-size: 38px;
+}
+
+.palestra__wrapper-list {
+  margin-top: 35px;
+}
+
+.palestra__items {
+  padding-left: 70px;
+}
+
+.palestra__header-infos__title--list {
+  margin-bottom: 15px;
+}
+
+.palestra__items__item {
+  margin-bottom: 6px;
+  font-size: 20px;
+  list-style-type: circle;
+}
