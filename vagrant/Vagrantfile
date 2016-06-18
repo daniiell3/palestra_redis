@@ -50,5 +50,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder "../drupal7/", "/var/www/html/drupal", nfs: enable_nfs
 
+  config.vm.synced_folder "../drupal8.dev/", "/var/www/html/drupal8", nfs: enable_nfs
+
   config.vm.synced_folder "../redis/", "/var/www/html/redis", nfs: enable_nfs
 end
