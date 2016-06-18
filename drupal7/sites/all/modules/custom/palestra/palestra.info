@@ -1,5 +1,0 @@
-name = Palestra Redis
-description = Implementação Redis custom.
-core = 7.x
-core = "7.x"
-project = "palestra"

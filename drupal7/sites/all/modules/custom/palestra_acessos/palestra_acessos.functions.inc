@@ -1,6 +1,44 @@
 <?php
 
 /*
+ * Implements callback of menu /palestra
+ */
+function _palestra_acessos_callback() {
+  $result = [];
+
+  if ($redis = _redis_connect()) {
+    $result['requests'] = ($redis->get(REDIS_INCR)) ? $redis->get(REDIS_INCR) : '';
+
+    $result['ips'] = (!empty($redis->zrange(REDIS_IPS, 0, -1))) ? $redis->zrange(REDIS_IPS, 0, -1) : '';
+
+    $result['single_request_by_ip'] = (!empty($redis->zcard(REDIS_IPS))) ? $redis->zcard(REDIS_IPS) : '';
+  }
+
+  drupal_json_output($result);
+}
+
+/*
+ * Implements callback of menu /palestra
+ */
+function _palestra_callback() {
+  if ($redis = _redis_connect()) {
+    // Incrementando requests
+    _palestra_requests($redis, REDIS_INCR);
+
+    // guardando ips
+    _palestra_ip($redis, REDIS_IPS);
+
+    // add custom js
+    drupal_add_js(drupal_get_path('module', 'palestra_acessos') . '/assets/js/palestra.js');
+
+    // add custom css
+    drupal_add_css(drupal_get_path('module', 'palestra_acessos') . '/assets/css/palestra.css');
+  }
+
+  return theme('palestra');
+}
+
+/*
  * Implements custom function redis connect
  */
 function _redis_connect() {

@@ -1,21 +1,9 @@
 <?php
 
 /*
- ** Implements hook_menu()
+ ** Implements callback of menu /teste/redis
  */
-function teste_redis_menu() {
-  $items['teste/redis'] = array(
-    'page callback'   => '_teste_redis_callback',
-    'access callback' => TRUE
-  );
-
-  return $items;
-}
-
-/*
- ** Implements callback /teste/redis
- */
-function _teste_redis_callback() {
+function _cache_redis_default_callback() {
   if ($cached = cache_get('list:data:apache')) {
     $data = $cached->data;
   }

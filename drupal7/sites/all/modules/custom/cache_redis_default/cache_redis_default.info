@@ -1,5 +1,7 @@
 name = Redis Test
 description = Testando redis module custom.
 core = 7.x
+
+version = "7.x-1.0"
 core = "7.x"
-project = "teste_redis"
+project = "cache_redis_default"

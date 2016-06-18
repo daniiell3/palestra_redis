@@ -1,0 +1,15 @@
+<?php
+
+require_once 'cache_redis_default.functions.inc';
+
+/*
+ ** Implements hook_menu()
+ */
+function cache_redis_default_menu() {
+  $items['redis/drupal-default'] = array(
+    'page callback'   => '_cache_redis_default_callback',
+    'access callback' => TRUE
+  );
+
+  return $items;
+}

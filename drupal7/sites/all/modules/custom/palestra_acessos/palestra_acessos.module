@@ -1,0 +1,36 @@
+<?php
+
+require_once 'palestra_acessos.functions.inc';
+
+define('REDIS_INCR', 'palestra:requests');
+define('REDIS_IPS', 'palestra:ips');
+
+/*
+ * Implements hook_menu()
+ */
+function palestra_acessos_menu() {
+  $items['palestra'] = array(
+    'page callback'   => '_palestra_callback',
+    'access callback' => TRUE,
+    'type'            => MENU_NORMAL_ITEM
+  );
+
+  $items['palestra/acessos'] = array(
+    'page callback'   => '_palestra_acessos_callback',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+/*
+ * Implementation of hook_theme().
+ */
+function palestra_acessos_theme(){
+  return array(
+    'palestra' => array(
+      'template' => 'templates/palestra',
+    ),
+  );
+}

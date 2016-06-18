@@ -1,5 +1,5 @@
 <section class="palestra">
-  <h2 class="palestra__title">Palestra Redis</h2>
+  <h2 class="palestra__title">Redis Acessos</h2>
   <div class="palestra__header-infos">
     <h3 class="palestra__header-infos__title">Quantidade de acessos:</h3>
     <span id="qtd-requests" class="palestra__header-infos__data"></span>  
