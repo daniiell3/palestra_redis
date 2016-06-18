@@ -217,9 +217,9 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'drupal7',
+      'database' => 'drupal_redis',
       'username' => 'root',
-      'password' => '',
+      'password' => '123456',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
@@ -258,7 +258,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'glhbVQ-TpG7dSgezstcFcEEWNOWmgZ7bHdbTD19MMgM';
+$drupal_hash_salt = 'tEVjR8LWRLgOIolhrSaPyULdWttZdPQxjGz7VpSYKqc';
 
 /**
  * Base URL (optional).
@@ -605,7 +605,7 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 $conf['redis_client_interface'] = 'PhpRedis';
 $conf['redis_client_host']      = '127.0.0.1';
 $conf['redis_client_base']      = 1;
-$conf['redis_client_password']  = "mypass";
+$conf['redis_client_password']  = "654321";
 $conf['cache_prefix']           = 'drupal_';
 $conf['redis_cache_socket']     = '/tmp/redis.sock';
 $conf['lock_inc']               = 'sites/all/modules/contrib/redis/redis.lock.inc';

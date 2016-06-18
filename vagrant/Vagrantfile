@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "ubuntu/trusty64-juju"
+
+  enable_nfs = false
+
+  if !Vagrant::Util::Platform.windows?
+    enable_nfs = true
+  end
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+    config.cache.synced_folder_opts = {
+      type: :nfs,
+      mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+    }
+  end
+
+  config.vm.provider :virtualbox do |vb|
+
+    vb.name = "palestra-redis"
+    
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    vb.customize ["modifyvm", :id, "--cpus", "8"]
+
+    # vb.gui = true
+    vb.customize ["modifyvm", :id, "--memory", "3072"]
+    vb.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+    vb.customize ["modifyvm", :id, "--pae", "on"]
+  end
+
+  config.vm.hostname = "palestra-redis"
+
+  config.vm.network :public_network
+
+  config.vm.network :forwarded_port, guest: 80, host: 8010
+
+  config.vm.network :private_network, ip: "33.33.33.10"
+
+  config.vm.synced_folder "../drupal7/", "/var/www/html/drupal", nfs: enable_nfs
+
+  config.vm.synced_folder "../redis/", "/var/www/html/redis", nfs: enable_nfs
+end

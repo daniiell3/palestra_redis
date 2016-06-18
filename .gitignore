@@ -1,3 +1,5 @@
+.DS_Store
+
 # Predis
 redis/predis/vendor
 redis/predis/composer.lock
