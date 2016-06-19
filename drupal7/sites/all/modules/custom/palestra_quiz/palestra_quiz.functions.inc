@@ -30,8 +30,9 @@ function _palestra_quiz_form() {
  * Implements custom function of menu "quiz/vote"
  */
 function _palestra_quiz_vote_computed() {
-  $option = (isset($_POST['vote'])) ? $_POST['vote'] : '';
-  $vote   = '';
+  $option    = (isset($_POST['vote'])) ? $_POST['vote'] : '';
+  $vote      = '';
+  $total_key = 'total';
 
   if (!empty($option)) {
     if ($redis = _redis_connect(6)) {
@@ -39,6 +40,12 @@ function _palestra_quiz_vote_computed() {
         $redis->set($option, 1);
       } else {
         $redis->incr($option);
+      }
+
+      if (!$redis->get($total_key)) {
+        $redis->set($total_key, 1);
+      } else {
+        $redis->incr($total_key);
       }
 
       $vote = $option;

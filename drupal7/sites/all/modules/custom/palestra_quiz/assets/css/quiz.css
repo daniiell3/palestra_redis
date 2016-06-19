@@ -8,6 +8,7 @@
   padding: 35px 88px 25px;
   border-radius: 5px;
   box-sizing: border-box;
+  box-shadow: 0px 3px 6px #ccc;
 }
 
 .form-item-team-campinas.form-group > label {
@@ -43,4 +44,37 @@
   background-color: #fff;
   border-color: #ccc;
   box-shadow: 0px 3px 6px #ccc;
+}
+
+.navbar-toggle {
+  display: none;
+}
+
+@media only screen and (max-device-width: 1000px) {
+  #palestra_quiz {
+    width: 100%;
+  }
+
+  .form-item-team-campinas.form-group > label {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  #palestra_quiz > div {
+    padding: 35px 15px 25px;
+    border-radius: 0;
+  }
+
+  .form-item-team-campinas.form-group > label {
+    font-size: 16px;
+  }
+
+  .form-item-team-campinas.radio > label {
+    font-size: 14px;
+  }
+
+  #palestra_quiz input[type="radio"] {
+    margin-top: 3px;
+  }
 }
