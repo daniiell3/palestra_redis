@@ -6,7 +6,7 @@
 function _palestra_acessos_callback() {
   $result = [];
 
-  if ($redis = _redis_connect()) {
+  if ($redis = _redis_connect(5)) {
     $result['requests'] = ($redis->get(REDIS_INCR)) ? $redis->get(REDIS_INCR) : '';
 
     $result['ips'] = (!empty($redis->zrange(REDIS_IPS, 0, -1))) ? $redis->zrange(REDIS_IPS, 0, -1) : '';
@@ -21,7 +21,7 @@ function _palestra_acessos_callback() {
  * Implements callback of menu /palestra
  */
 function _palestra_callback() {
-  if ($redis = _redis_connect()) {
+  if ($redis = _redis_connect(5)) {
     // Incrementando requests
     _palestra_requests($redis, REDIS_INCR);
 
@@ -41,14 +41,14 @@ function _palestra_callback() {
 /*
  * Implements custom function redis connect
  */
-function _redis_connect() {
+function _redis_connect($database) {
   $redis = null;
 
   if ('PhpRedis' === variable_get('redis_client_interface')) {
     $redis = new Redis;
     $redis->connect(variable_get('redis_client_host'));
     $redis->auth(variable_get('redis_client_password'));
-    $redis->select(5);
+    $redis->select($database);
   }
 
   return $redis;

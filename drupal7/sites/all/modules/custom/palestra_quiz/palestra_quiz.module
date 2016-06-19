@@ -1,0 +1,23 @@
+<?php
+
+require_once 'palestra_quiz.functions.inc';
+
+/*
+ * Implements hook_menu()
+ */
+function palestra_quiz_menu() {
+  $items['quiz'] = array(
+    'page callback'   => 'drupal_get_form',
+    'page arguments'  => array('_palestra_quiz_form'),
+    'access callback' => TRUE,
+    'file'            => 'palestra_quiz.functions.inc'
+  );
+
+  $items['quiz/vote'] = array(
+    'page callback'   => '_palestra_quiz_vote_computed',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK
+  );
+
+  return $items;
+}
