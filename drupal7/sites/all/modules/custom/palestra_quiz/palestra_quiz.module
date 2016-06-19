@@ -19,5 +19,28 @@ function palestra_quiz_menu() {
     'type'            => MENU_CALLBACK
   );
 
+  $items['quiz/placar'] = array(
+    'page callback'   => '_palestra_quiz_result',
+    'access callback' => TRUE,
+    'type'            => MENU_NORMAL_ITEM
+  );
+
+  $items['quiz/result'] = array(
+    'page callback'   => '_palestra_quiz_result_callback',
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK
+  );
+
   return $items;
+}
+
+/*
+ * Implementation of hook_theme().
+ */
+function palestra_quiz_theme(){
+  return array(
+    'quiz' => array(
+      'template' => 'templates/quiz',
+    ),
+  );
 }

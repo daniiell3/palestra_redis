@@ -1,0 +1,46 @@
+.breadcrumb {
+  display: none;
+}
+
+.quiz {
+  margin: 60px 0;
+}
+
+.quiz__title {
+  margin-bottom: 60px;
+}
+
+.quiz__items {
+  padding: 0;
+}
+
+.quiz__items__item {
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.quiz__items__item__label {
+  float: left;
+  font-size: 25px;
+  min-width: 176px;
+  margin-right: 40px;
+  font-weight: 500;
+}
+
+.quiz__items__item__progress {
+  width: 30%;
+  display: inline-block;
+  height: 30px !important;
+}
+
+.quiz__items__item__result--ponte {
+  background-color: #000 !important;
+}
+
+.quiz__items__item__result--guarani {
+  background-color: #016C50 !important;
+}
+
+.quiz__items__item__result--red {
+  background-color: #E5194C !important;
+}

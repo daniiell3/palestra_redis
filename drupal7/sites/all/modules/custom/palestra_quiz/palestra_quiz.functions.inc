@@ -1,5 +1,7 @@
 <?php
 
+define('DATABASE', 6);
+
 /**
  * Implements custom function of menu "quiz"
  */
@@ -35,7 +37,7 @@ function _palestra_quiz_vote_computed() {
   $total_key = 'total';
 
   if (!empty($option)) {
-    if ($redis = _redis_connect(6)) {
+    if ($redis = _redis_connect(DATABASE)) {
       if (!$redis->get($option)) {
         $redis->set($option, 1);
       } else {
@@ -53,4 +55,35 @@ function _palestra_quiz_vote_computed() {
   }
 
   return drupal_json_output(array('vote' => $vote));
+}
+
+/**
+ * Implements custom function of menu "quiz/placar"
+ */
+function _palestra_quiz_result() {
+  // add custom js
+  drupal_add_js(drupal_get_path('module', 'palestra_quiz') . '/assets/js/quiz-result.js');
+
+  // add custom css
+  drupal_add_css(drupal_get_path('module', 'palestra_quiz') . '/assets/css/quiz-result.css');
+
+  return theme('quiz');
+}
+
+/**
+ * Implements custom function of menu "quiz/result"
+ */
+function _palestra_quiz_result_callback() {
+  $data = array('total' => 0);
+
+  if ($redis = _redis_connect(DATABASE)) {
+    $data = array(
+      'total' => ($redis->get('total')) ? $redis->get('total') : 0,
+      'ponte' => ($redis->get('ponte_preta')) ? $redis->get('ponte_preta') : 0,
+      'guarani' => ($redis->get('guarani')) ? $redis->get('guarani') : 0,
+      'red' => ($redis->get('red_bull')) ? $redis->get('red_bull') : 0
+    );
+  }
+
+  drupal_json_output($data);
 }

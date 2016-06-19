@@ -1,6 +1,6 @@
 (function ($) {
   Drupal.behaviors.quiz = {
-    attach: function (context, settings) {
+    attach: function () {
       var self = this;
 
       $('#edit-submit').click(function(e) {
