@@ -1,5 +1,8 @@
 .DS_Store
 
+#Drupal
+drupal8.dev/sites/default/files
+
 # Predis
 redis/predis/vendor
 redis/predis/composer.lock
