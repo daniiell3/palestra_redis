@@ -1,0 +1,13 @@
+<?php
+
+require_once 'palestra_queue.functions.inc';
+require_once 'drush/palestra_queue.drush.inc';
+
+/*
+ * Implements hook_node_insert()
+ */
+function palestra_queue_node_insert($node) {
+  if ($node->type === 'article') {
+    _palestra_queue_add($node->nid);
+  }
+}
