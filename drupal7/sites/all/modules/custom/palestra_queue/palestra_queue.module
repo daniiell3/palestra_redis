@@ -11,3 +11,12 @@ function palestra_queue_node_insert($node) {
     _palestra_queue_add($node->nid);
   }
 }
+
+/*
+ * Implements hook_node_update()
+ */
+function palestra_queue_node_update($node) {
+  if ($node->type === 'article') {
+    _palestra_queue_add($node->nid);
+  }
+}

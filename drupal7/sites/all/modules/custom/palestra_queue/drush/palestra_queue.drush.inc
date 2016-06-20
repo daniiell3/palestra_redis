@@ -29,14 +29,18 @@ function palestra_queue_drush_command() {
 
 function _palestra_queue_drush_callback() {
   if ($redis = _redis_connect(7)) {
-    $nids = $redis->lRange('nodes', 0, -1);
+    $nids = $redis->smembers('nodes');
 
     if (!empty($nids)) {
       foreach ($nids as $key => $nid) {
         $node  = node_load($nid);
         $title = $node->title;
 
-        $node->title = $title . ' - DrupalCamp';
+        $pos = strpos($title, '- DrupalCamp');
+
+        if ($pos === false) { 
+          $node->title = $title . ' - DrupalCamp';
+        }
 
         if (!isset($node->field_image[LANGUAGE_NONE])) {
           $node->field_image[LANGUAGE_NONE][0] = array('fid' => 1);
@@ -45,7 +49,7 @@ function _palestra_queue_drush_callback() {
         node_save($node);
 
         drush_log('Conteúdo ' . $title . ' atualizado com sucesso.', 'success');
-        $redis->lRem('nodes', $nid, 1);
+        $redis->sRem('nodes', $nid);
       }
     } 
     else {
