@@ -1,6 +1,8 @@
 <?php
 
 define('DATABASE', 6);
+define('KEYTEAM', 'team');
+define('TOTALKEY', 'total');
 
 /**
  * Implements custom function of menu "quiz"
@@ -34,21 +36,39 @@ function _palestra_quiz_form() {
 function _palestra_quiz_vote_computed() {
   $option    = (isset($_POST['vote'])) ? $_POST['vote'] : '';
   $vote      = '';
-  $total_key = 'total';
 
   if (!empty($option)) {
     if ($redis = _redis_connect(DATABASE)) {
+
+      // string
       if (!$redis->get($option)) {
         $redis->set($option, 1);
       } else {
         $redis->incr($option);
       }
 
-      if (!$redis->get($total_key)) {
-        $redis->set($total_key, 1);
+      if (!$redis->get(TOTALKEY)) {
+        $redis->set(TOTALKEY, 1);
       } else {
-        $redis->incr($total_key);
+        $redis->incr(TOTALKEY);
       }
+      // end
+
+      // hash
+      /*
+      if (!$redis->hget(KEYTEAM, $option)) {
+        $redis->hset(KEYTEAM, $option, 1);
+      } else {
+        $redis->hincrby(KEYTEAM, $option, 1);
+      }
+
+      if (!$redis->hget(KEYTEAM, TOTALKEY)) {
+        $redis->hset(KEYTEAM, TOTALKEY, 1);
+      } else {
+        $redis->hincrby(KEYTEAM, TOTALKEY, 1);
+      }
+      */
+      // end
 
       $vote = $option;
     }
@@ -77,12 +97,27 @@ function _palestra_quiz_result_callback() {
   $data = array('total' => 0);
 
   if ($redis = _redis_connect(DATABASE)) {
+    $ponte_key   = 'ponte_preta';
+    $guarani_key = 'guarani';
+    $red_key     = 'red_bull';
+
+    // string
     $data = array(
-      'total' => ($redis->get('total')) ? $redis->get('total') : 0,
-      'ponte' => ($redis->get('ponte_preta')) ? $redis->get('ponte_preta') : 0,
-      'guarani' => ($redis->get('guarani')) ? $redis->get('guarani') : 0,
-      'red' => ($redis->get('red_bull')) ? $redis->get('red_bull') : 0
+      'total' => ($redis->get(TOTALKEY)) ? $redis->get(TOTALKEY) : 0,
+      'ponte' => ($redis->get($ponte_key)) ? $redis->get($ponte_key) : 0,
+      'guarani' => ($redis->get($guarani_key)) ? $redis->get($guarani_key) : 0,
+      'red' => ($redis->get($red_key)) ? $redis->get($red_key) : 0
     );
+
+    // hash
+    /*
+    $data = array(
+      'total' => ($redis->hget(KEYTEAM, TOTALKEY)) ? $redis->hget(KEYTEAM, TOTALKEY) : 0,
+      'ponte' => ($redis->hget(KEYTEAM, $ponte_key)) ? $redis->hget(KEYTEAM, $ponte_key) : 0,
+      'guarani' => ($redis->hget(KEYTEAM, $guarani_key)) ? $redis->hget(KEYTEAM, $guarani_key) : 0,
+      'red' => ($redis->hget(KEYTEAM, $red_key)) ? $redis->hget(KEYTEAM, $red_key) : 0
+    );
+    */
   }
 
   drupal_json_output($data);
