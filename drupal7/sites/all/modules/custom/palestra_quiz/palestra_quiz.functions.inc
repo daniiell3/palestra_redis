@@ -41,13 +41,13 @@ function _palestra_quiz_vote_computed() {
     if ($redis = _redis_connect(DATABASE)) {
 
       // string
-      if (!$redis->get($option)) {
+      if (!$redis->exists($option)) {
         $redis->set($option, 1);
       } else {
         $redis->incr($option);
       }
 
-      if (!$redis->get(TOTALKEY)) {
+      if (!$redis->exists(TOTALKEY)) {
         $redis->set(TOTALKEY, 1);
       } else {
         $redis->incr(TOTALKEY);

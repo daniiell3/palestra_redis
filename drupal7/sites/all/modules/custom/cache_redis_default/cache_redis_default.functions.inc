@@ -1,7 +1,7 @@
 <?php
 
 /*
- ** Implements callback of menu /teste/redis
+ ** Implements callback of menu redis/drupal-default
  */
 function _cache_redis_default_callback() {
   if ($cached = cache_get('list:data:apache')) {
@@ -11,10 +11,11 @@ function _cache_redis_default_callback() {
   if (empty($data)) {
     $data = array(
       'apache' => 'Barril',
-      'eggs'   => 'Banana'
+      'eggs'   => 'Banana',
+      // 'daniel' => 'Santos'
     );
 
-    cache_set('list:data:apache', $data, 'cache', time() + 60*60);
+    cache_set('list:data:apache', $data, 'cache', time() + 60);
   }
 
   drupal_json_output($data);
