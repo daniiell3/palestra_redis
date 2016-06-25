@@ -11,12 +11,14 @@ function _cache_redis_default_callback() {
   if (empty($data)) {
     $data = array(
       'apache' => 'Barril',
-      'eggs'   => 'Banana',
+      'drupal'   => 'Camp',
       // 'daniel' => 'Santos'
     );
 
     cache_set('list:data:apache', $data, 'cache', time() + 60);
   }
+
+  // key drupal_:cache:list:data:apache
 
   drupal_json_output($data);
 }
