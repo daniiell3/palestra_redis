@@ -15,7 +15,7 @@ function _cache_redis_default_callback() {
       // 'daniel' => 'Santos'
     );
 
-    cache_set('list:data:apache', $data, 'cache', time() + 60);
+    cache_set('list:data:apache', $data, 'cache', time() + 40);
   }
 
   // key drupal_:cache:list:data:apache
